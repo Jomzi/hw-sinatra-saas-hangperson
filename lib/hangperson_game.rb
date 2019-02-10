@@ -31,14 +31,39 @@ class HangpersonGame
   end
   
   def guess(characters)
+    if characters==nil || characters=='' || !characters.match("[a-zA-Z]")
+      raise ArgumentError
+    end
+    characters.downcase!
+    
     if @guesses.include?(characters) || @wrong_guesses.include?(characters)
       return false
     end  
     if !@word.include?(characters)
-      @wrong_guesses = characters
+      @wrong_guesses += characters
     else  
-      @guesses = characters
+      @guesses += characters
     end  
     true
   end
-end
+  
+  def word_with_guesses
+    ret = ''
+    @word.each_char do |ch|
+      ret += @guesses.include?(ch) ? ch : '-'
+    end
+    return ret
+  end
+  
+  def check_win_or_lose
+    if @wrong_guesses.length == 7
+      return :lose
+    end  
+    if @word == word_with_guesses
+      return :win
+    end
+    
+    
+  end  
+
+end  
