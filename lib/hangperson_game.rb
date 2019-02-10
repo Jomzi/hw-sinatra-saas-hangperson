@@ -62,7 +62,7 @@ class HangpersonGame
     if @word == word_with_guesses
       return :win
     end
-    
+    :play
     
   end  
 
